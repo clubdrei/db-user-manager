@@ -378,6 +378,10 @@ class DbUser
         }
 
         $usernameQuoted = $this->connection->quote($username);
+        $hostQuoted = $host;
+        if ('*' !== $hostQuoted) {
+            $hostQuoted = $this->connection->quote($host);
+        }
 
         $databaseQuoted = $database;
         if ('*' !== $databaseQuoted) {
@@ -390,7 +394,7 @@ class DbUser
         }
 
         $sqlQuery = $privilegeStatement . ' ' . implode(', ', $privileges)
-            . ' ON ' . $databaseQuoted . '.' . $tableQuoted . ' TO ' . $usernameQuoted . '@' . $host . ';';
+            . ' ON ' . $databaseQuoted . '.' . $tableQuoted . ' TO ' . $usernameQuoted . '@' . $hostQuoted . ';';
 
         return $sqlQuery;
     }
