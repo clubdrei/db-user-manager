@@ -242,7 +242,7 @@ class DbUser
      */
     public function dropUserQuery($username, $host = 'localhost')
     {
-        return 'DROP USER ' . $username . '@' . $host . ';';
+        return 'DROP USER ' . $this->connection->quote($username) . '@' . $this->connection->quote($host) . ';';
     }
 
     /**
