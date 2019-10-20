@@ -216,7 +216,7 @@ class DbUser
      */
     public function createUserQuery($username, $password, $host = 'localhost')
     {
-        return 'CREATE USER ' . $this->connection->quote($username) . '@' . $this->connection->quote($host) . ' IDENTIFIED BY ' . $this->connection->quote($password) . ';';
+        return 'CREATE USER ' . $this->connection->quote($username) . '@' . $this->quoteIfNotWildcard($host) . ' IDENTIFIED BY ' . $this->connection->quote($password) . ';';
     }
 
     /**
@@ -242,7 +242,7 @@ class DbUser
      */
     public function dropUserQuery($username, $host = 'localhost')
     {
-        return 'DROP USER ' . $this->connection->quote($username) . '@' . $this->connection->quote($host) . ';';
+        return 'DROP USER ' . $this->connection->quote($username) . '@' . $this->quoteIfNotWildcard($host) . ';';
     }
 
     /**
@@ -378,25 +378,22 @@ class DbUser
         }
 
         $usernameQuoted = $this->connection->quote($username);
-
-        $hostQuoted = $host;
-        if ('*' !== $hostQuoted) {
-            $hostQuoted = $this->connection->quote($host);
-        }
-
-        $databaseQuoted = $database;
-        if ('*' !== $databaseQuoted) {
-            $databaseQuoted = $this->connection->quote($database);
-        }
-
-        $tableQuoted = $table;
-        if ('*' !== $tableQuoted) {
-            $tableQuoted = $this->connection->quote($table);
-        }
+        $hostQuoted = $this->quoteIfNotWildcard($host);
+        $databaseQuoted = $this->quoteIfNotWildcard($database);
+        $tableQuoted = $this->quoteIfNotWildcard($table);
 
         $sqlQuery = $privilegeStatement . ' ' . implode(', ', $privileges)
             . ' ON ' . $databaseQuoted . '.' . $tableQuoted . ' TO ' . $usernameQuoted . '@' . $hostQuoted . ';';
 
         return $sqlQuery;
+    }
+
+    protected function quoteIfNotWildcard(string $value): string
+    {
+        if ('*' === $value) {
+            return $value;
+        }
+
+        return $this->connection->quote($value);
     }
 }
