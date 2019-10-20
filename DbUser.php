@@ -216,7 +216,7 @@ class DbUser
      */
     public function createUserQuery($username, $password, $host = 'localhost')
     {
-        return 'CREATE USER '.$username.'@'.$host.' IDENTIFIED BY '.$this->connection->quote($password).';';
+        return 'CREATE USER '. $username.'@'.$host.' IDENTIFIED BY '.$this->connection->quote($password).';';
     }
 
     /**
