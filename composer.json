@@ -1,5 +1,5 @@
 {
-  "name": "shinbuntu/db-user",
+  "name": "clubdrei/db-user-manager",
   "type": "library",
   "description": "Create Mysql users and manage privileges",
   "license": "MIT",
@@ -14,8 +14,8 @@
     "mayflower/php-codebrowser": "~1.1"
   },
   "require": {
-    "php": "~5.6",
-    "doctrine/dbal": "2.4.*"
+    "php": ">7.1 <7.4",
+    "doctrine/dbal": "^2.9"
   },
   "autoload": {
     "psr-4": { "Shinbuntu\\DbUser\\": "" }
