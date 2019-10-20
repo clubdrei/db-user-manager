@@ -194,11 +194,11 @@ class DbUser
      *
      * @param string $username Mysql username
      * @param string $password Mysql password
-     * @param string $host     Mysql host
-     *
-     * @throws \Doctrine\DBAL\DBALException
+     * @param string $host Mysql host
      *
      * @return bool TRUE on success or FALSE on failure.
+     * @throws \Doctrine\DBAL\DBALException
+     *
      */
     public function createUser($username, $password, $host = 'localhost')
     {
@@ -210,13 +210,13 @@ class DbUser
      *
      * @param string $username Mysql username
      * @param string $password Mysql password
-     * @param string $host     Mysql host
+     * @param string $host Mysql host
      *
      * @return string SQL Query string
      */
     public function createUserQuery($username, $password, $host = 'localhost')
     {
-        return 'CREATE USER '. $username.'@'.$host.' IDENTIFIED BY '.$this->connection->quote($password).';';
+        return 'CREATE USER ' . $username . '@' . $host . ' IDENTIFIED BY ' . $this->connection->quote($password) . ';';
     }
 
     /**
@@ -242,7 +242,7 @@ class DbUser
      */
     public function dropUserQuery($username, $host = 'localhost')
     {
-        return 'DROP USER '.$username.'@'.$host.';';
+        return 'DROP USER ' . $username . '@' . $host . ';';
     }
 
     /**
@@ -266,21 +266,21 @@ class DbUser
      */
     public function userExistQuery($username)
     {
-        return 'SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '.$this->connection->quote($username).');';
+        return 'SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = ' . $this->connection->quote($username) . ');';
     }
 
     /**
      * Grant privileges to mysql user.
      *
-     * @param string       $username   Mysql username
+     * @param string $username Mysql username
      * @param array|string $privileges Mysql privileges
-     * @param string       $database   Mysql database name
-     * @param string       $table      Mysql $table name
-     * @param string       $host       Mysql host
-     *
-     * @throws \Doctrine\DBAL\DBALException
+     * @param string $database Mysql database name
+     * @param string $table Mysql $table name
+     * @param string $host Mysql host
      *
      * @return bool TRUE on success or FALSE on failure.
+     * @throws \Doctrine\DBAL\DBALException
+     *
      */
     public function grantPrivileges(
         $username,
@@ -304,15 +304,15 @@ class DbUser
     /**
      * Revoke privileges to mysql user.
      *
-     * @param string       $username   Mysql username
+     * @param string $username Mysql username
      * @param array|string $privileges Mysql privileges
-     * @param string       $database   Mysql database name
-     * @param string       $table      Mysql $table name
-     * @param string       $host       Mysql host
-     *
-     * @throws \Doctrine\DBAL\DBALException
+     * @param string $database Mysql database name
+     * @param string $table Mysql $table name
+     * @param string $host Mysql host
      *
      * @return bool TRUE on success or FALSE on failure.
+     * @throws \Doctrine\DBAL\DBALException
+     *
      */
     public function revokePrivileges(
         $username,
@@ -356,12 +356,12 @@ class DbUser
     /**
      * Build query to Grant or Revoke privileges to mysql user.
      *
-     * @param string       $privilegeStatement REVOKE or GRANT
-     * @param string       $username           Mysql username
-     * @param array|string $privileges         Mysql privileges
-     * @param string       $database           Mysql database name
-     * @param string       $table              Mysql $table name
-     * @param string       $host               Mysql host
+     * @param string $privilegeStatement REVOKE or GRANT
+     * @param string $username Mysql username
+     * @param array|string $privileges Mysql privileges
+     * @param string $database Mysql database name
+     * @param string $table Mysql $table name
+     * @param string $host Mysql host
      *
      * @return string SQL Query string
      */
@@ -379,8 +379,8 @@ class DbUser
 
         $usernameQuoted = $this->connection->quote($username);
 
-        $sqlQuery = $privilegeStatement.' '.implode(', ', $privileges)
-            .' ON '.$database.'.'.$table.' TO '.$usernameQuoted.'@'.$host.';';
+        $sqlQuery = $privilegeStatement . ' ' . implode(', ', $privileges)
+            . ' ON ' . $database . '.' . $table . ' TO ' . $usernameQuoted . '@' . $host . ';';
 
         return $sqlQuery;
     }
