@@ -379,7 +379,7 @@ class DbUser
 
         $usernameQuoted = $this->connection->quote($username);
         $hostQuoted = $this->quoteIfNotWildcard($host);
-        $databaseQuoted = $this->quoteIfNotWildcard($database);
+        $databaseQuoted = $this->quoteIdentifierIfNotWildcard($database);
         $tableQuoted = $this->quoteIfNotWildcard($table);
 
         $sqlQuery = $privilegeStatement . ' ' . implode(', ', $privileges)
@@ -395,5 +395,14 @@ class DbUser
         }
 
         return $this->connection->quote($value);
+    }
+
+    protected function quoteIdentifierIfNotWildcard(string $value): string
+    {
+        if ('*' === $value) {
+            return $value;
+        }
+
+        return $this->connection->quoteIdentifier($value);
     }
 }
