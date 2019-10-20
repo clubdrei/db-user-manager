@@ -378,6 +378,7 @@ class DbUser
         }
 
         $usernameQuoted = $this->connection->quote($username);
+
         $hostQuoted = $host;
         if ('*' !== $hostQuoted) {
             $hostQuoted = $this->connection->quote($host);
