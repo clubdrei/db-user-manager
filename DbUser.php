@@ -379,8 +379,18 @@ class DbUser
 
         $usernameQuoted = $this->connection->quote($username);
 
+        $databaseQuoted = $database;
+        if ('*' !== $databaseQuoted) {
+            $databaseQuoted = $this->connection->quote($database);
+        }
+
+        $tableQuoted = $table;
+        if ('*' !== $tableQuoted) {
+            $tableQuoted = $this->connection->quote($table);
+        }
+
         $sqlQuery = $privilegeStatement . ' ' . implode(', ', $privileges)
-            . ' ON ' . $database . '.' . $table . ' TO ' . $usernameQuoted . '@' . $host . ';';
+            . ' ON ' . $databaseQuoted . '.' . $tableQuoted . ' TO ' . $usernameQuoted . '@' . $host . ';';
 
         return $sqlQuery;
     }
