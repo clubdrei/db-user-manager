@@ -390,7 +390,7 @@ class DbUser
 
     protected function quoteIfNotWildcard(string $value): string
     {
-        if ('*' === $value || '%' === $value) {
+        if ('*' === $value) {
             return $value;
         }
 
@@ -399,7 +399,7 @@ class DbUser
 
     protected function quoteIdentifierIfNotWildcard(string $value): string
     {
-        if ('*' === $value || '%' === $value) {
+        if ('*' === $value) {
             return $value;
         }
 
